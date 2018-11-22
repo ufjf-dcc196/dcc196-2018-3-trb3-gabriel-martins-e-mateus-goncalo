@@ -29,5 +29,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, MainActivity.REQUEST_LISTA);
             }
         });
+
+        btnGerenCompras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ComprasActivity.class);
+                startActivityForResult(intent, MainActivity.REQUEST_COMPRA);
+            }
+        });
     }
 }
