@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".ListaActivity" />
         <activity android:name=".CadastrarListaActivity" />
-        <activity android:name=".ItensListaActivity"></activity>
+        <activity android:name=".ItensListaActivity" />
+        <activity android:name=".CadastrarItemActivity"></activity>
     </application>
 
 </manifest>
