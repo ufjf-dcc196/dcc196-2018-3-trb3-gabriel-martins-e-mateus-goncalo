@@ -3,4 +3,6 @@
     <string name="hint_NomeLista">Nome da Lista</string>
     <string name="hint_NomeItem">Nome do Item</string>
     <string name="hint_Qtd">Quantidade</string>
+    <string name="hint_DataLista">Data da lista</string>
+    <string name="hint_NomeMercado">Nome do mercado</string>
 </resources>

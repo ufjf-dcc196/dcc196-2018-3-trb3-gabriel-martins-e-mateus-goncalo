@@ -7,18 +7,22 @@ public class Lista {
 
     private Integer registro;
     private String nome;
-    private Calendar data;
+    private Calendar dataFormatada;
+    private String data;
     private Double valor;
     private String nomeMercado;
     private ArrayList<ItemDeLista> itens;
 
-    public Lista(Integer registro, String nome, Calendar data, Double valor, String nomeMercado, ArrayList<ItemDeLista> itens) {
+    public Lista(Integer registro, String nome, String data, Double valor, String nomeMercado, ArrayList<ItemDeLista> itens) {
         this.registro = registro;
         this.nome = nome;
         this.data = data;
         this.valor = valor;
         this.nomeMercado = nomeMercado;
         this.itens = itens;
+    }
+
+    public Lista() {
     }
 
     public Integer getRegistro() {
@@ -37,11 +41,11 @@ public class Lista {
         this.nome = nome;
     }
 
-    public Calendar getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Calendar data) {
+    public void setData(String data) {
         this.data = data;
     }
 

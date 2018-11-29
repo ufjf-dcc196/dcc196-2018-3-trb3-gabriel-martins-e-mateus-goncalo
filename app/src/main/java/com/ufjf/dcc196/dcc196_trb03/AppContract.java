@@ -11,12 +11,14 @@ public class AppContract {
         public final static String COLUMN_NAME_DATA = "data";
         public static final String COLUMN_NAME_VALOR = "valor";
         public static final String COLUMN_NAME_MERCADO = "nomeMercado";
+        public static final String COLUMN_NAME_EHCOMPRA = "ehCompra";
         public final static String CREATE_LISTA  = "CREATE TABLE "+Lista.TABLE_NAME+" ("
                 + Lista.COLUMN_NAME_REGISTRO + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + Lista.COLUMN_NAME_NOME+ " TEXT, "
                 + Lista.COLUMN_NAME_DATA+ " TEXT, "
                 + Lista.COLUMN_NAME_VALOR+ " REAL, "
-                + Lista.COLUMN_NAME_MERCADO+ " TEXT"
+                + Lista.COLUMN_NAME_MERCADO+ " TEXT, "
+                + Lista.COLUMN_NAME_EHCOMPRA+ " INTEGER"
                 +")";
         public final static String DROP_LISTA = "DROP TABLE IF EXISTS "+Lista.TABLE_NAME;
     }
