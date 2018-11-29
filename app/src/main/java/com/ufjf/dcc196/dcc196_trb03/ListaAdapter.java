@@ -54,13 +54,13 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        int idxNum = cursor.getColumnIndexOrThrow(AppContract.Evento.COLUMN_NAME_REGISTRO);
-        int idxNome = cursor.getColumnIndexOrThrow(AppContract.Evento.COLUMN_NAME_NOME);
+        int idxNum = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_REGISTRO);
+        int idxNome = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_NOME);
 
         cursor.moveToPosition(i);
 
-        viewHolder.numEvento.setText(String.valueOf(cursor.getInt(idxNum)));
-        viewHolder.nomeEvento.setText(cursor.getString(idxNome));
+        viewHolder.txtNumeroEvento.setText(String.valueOf(cursor.getInt(idxNum)));
+        viewHolder.txtNomeEvento.setText(cursor.getString(idxNome));
 
     }
 
