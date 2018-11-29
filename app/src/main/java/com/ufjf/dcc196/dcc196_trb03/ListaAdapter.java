@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder>{
 
     private Cursor cursor;
@@ -54,13 +52,11 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        int idxNum = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_REGISTRO);
         int idxNome = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_NOME);
 
         cursor.moveToPosition(i);
 
-        viewHolder.txtNumeroEvento.setText(String.valueOf(cursor.getInt(idxNum)));
-        viewHolder.txtNomeEvento.setText(cursor.getString(idxNome));
+        viewHolder.txtNomeLista.setText(cursor.getString(idxNome));
 
     }
 
@@ -70,20 +66,20 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder>{
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        public TextView txtNomeEvento;
-        public TextView txtNumeroEvento;
+        public TextView txtNomeLista;
 
         public ViewHolder(final View itemView) {
             super(itemView);
-            txtNumeroEvento = itemView.findViewById(R.id.txtNumLista);
-            txtNomeEvento = itemView.findViewById(R.id.txtListaNome);
+            txtNomeLista = itemView.findViewById(R.id.txtListaNome);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(listener!=null){
                         int position = getAdapterPosition();
+                        cursor.moveToPosition(position);
+                        Integer idxNum = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_REGISTRO);
                         if(position!=RecyclerView.NO_POSITION){
-                            listener.onListaClick(itemView, position);
+                            listener.onListaClick(itemView, cursor.getInt(idxNum));
                         }
                     }
                 }
@@ -93,8 +89,10 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder>{
                 public boolean onLongClick(View v) {
                     if(longListener!=null){
                         int position = getAdapterPosition();
+                        cursor.moveToPosition(position);
+                        Integer idxNum = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_REGISTRO);
                         if(position!=RecyclerView.NO_POSITION){
-                            longListener.onListaLongClick(itemView, Integer.parseInt(txtNumeroEvento.getText().toString()));
+                            longListener.onListaLongClick(itemView, cursor.getInt(idxNum));
                             return true;
                         }
                     }

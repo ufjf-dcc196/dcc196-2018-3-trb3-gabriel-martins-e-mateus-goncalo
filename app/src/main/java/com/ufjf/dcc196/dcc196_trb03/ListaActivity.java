@@ -45,6 +45,17 @@ public class ListaActivity extends AppCompatActivity {
             }
         });
 
+        adapter.setOnListaLongClickListener(new ListaAdapter.OnListaLongClickListener() {
+            @Override
+            public void onListaLongClick(View listaView, int position) {
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
+                String select = AppContract.Lista.COLUMN_NAME_REGISTRO+" = ?";
+                String [] selectArgs = {String.valueOf(position)};
+                db.delete(AppContract.Lista.TABLE_NAME, select, selectArgs);
+                adapter.setCursor(getListas());
+            }
+        });
+
         btnNovaLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

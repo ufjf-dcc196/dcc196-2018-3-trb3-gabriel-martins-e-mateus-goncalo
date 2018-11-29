@@ -5,4 +5,5 @@
     <string name="hint_Qtd">Quantidade</string>
     <string name="hint_DataLista">Data da lista</string>
     <string name="hint_NomeMercado">Nome do mercado</string>
+    <string name="hint_ValorItem">Opcional (Valor do item)</string>
 </resources>

@@ -14,6 +14,9 @@ public class ItemDeLista {
         this.valor = valor;
     }
 
+    public ItemDeLista() {
+    }
+
     public Integer getCodigoItem() {
         return codigoItem;
     }
