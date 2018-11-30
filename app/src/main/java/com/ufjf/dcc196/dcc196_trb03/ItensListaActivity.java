@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class ItensListaActivity extends AppCompatActivity {
 
@@ -16,11 +18,14 @@ public class ItensListaActivity extends AppCompatActivity {
     private static final int REQUEST_EDITLISTA = 2;
 
     private Button btnAddItem;
+    private Button btnEditarLista;
+    private TextView txtNomeLista;
+    private TextView txtNomeMercado;
+    private TextView txtDataLista;
     private RecyclerView rvItensLista;
     private ItemAdapter adapter;
     private ListaDbHelper dbHelper;
     private Integer registro;
-    private Button btnEditarLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +37,16 @@ public class ItensListaActivity extends AppCompatActivity {
         final Bundle extras = getIntent().getExtras();
         registro = extras.getInt("registroLista");
 
+        Lista lista = getLista();
+
         btnAddItem = (Button) findViewById(R.id.btn_addItem);
         btnEditarLista = (Button) findViewById(R.id.btn_editarLista);
+        txtNomeLista = (TextView) findViewById(R.id.txt_nomeLista);
+        txtDataLista = (TextView) findViewById(R.id.txt_dataLista);
+        txtNomeMercado = (TextView) findViewById(R.id.txt_nomeMercado);
+        txtNomeLista.setText("Nome: " + lista.getNome());
+        txtDataLista.setText("Data: " + lista.getData());
+        txtNomeMercado.setText("Mercado: " + lista.getNomeMercado());
         rvItensLista = (RecyclerView) findViewById(R.id.rv_itensLista);
         rvItensLista.setLayoutManager(new LinearLayoutManager(this));
 
@@ -43,7 +56,7 @@ public class ItensListaActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new ItemAdapter.OnItemClickListener() {
             @Override
             public void onListaClick(View listaView, int position) {
-                // Função para ver as informações do Item e editar
+                
             }
         });
 
@@ -75,6 +88,30 @@ public class ItensListaActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private Lista getLista()
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String []visao = {
+                AppContract.Lista.COLUMN_NAME_REGISTRO,
+                AppContract.Lista.COLUMN_NAME_NOME,
+                AppContract.Lista.COLUMN_NAME_DATA,
+                AppContract.Lista.COLUMN_NAME_MERCADO,
+        };
+        String select = AppContract.Lista.COLUMN_NAME_REGISTRO+" = ?";
+        String [] selectArgs = {String.valueOf(registro)};
+        String sort = AppContract.Lista.COLUMN_NAME_NOME+ " ASC";
+        Cursor cursor = db.query(AppContract.Lista.TABLE_NAME, visao,select,selectArgs,null,null, sort);
+        Lista lista = new Lista();
+        Integer idxNome = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_NOME);
+        Integer idxData = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_DATA);
+        Integer idxMercado = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_MERCADO);
+        cursor.moveToPosition(0);
+        lista.setNome(cursor.getString(idxNome));
+        lista.setData(cursor.getString(idxData));
+        lista.setNomeMercado(cursor.getString(idxMercado));
+        return lista;
     }
 
     private Cursor getItens()

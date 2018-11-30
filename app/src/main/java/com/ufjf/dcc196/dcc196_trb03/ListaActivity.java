@@ -38,7 +38,6 @@ public class ListaActivity extends AppCompatActivity {
         adapter.setOnListaClickListener(new ListaAdapter.OnListaClickListener() {
             @Override
             public void onListaClick(View listaView, int position) {
-                // ver também as informações da lista deve ser possível e editar informações
                 Intent intent = new Intent(ListaActivity.this, ItensListaActivity.class);
                 Integer registroLista = position;
                 intent.putExtra("registroLista", registroLista);
