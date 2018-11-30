@@ -3,13 +3,13 @@ package com.ufjf.dcc196.dcc196_trb03;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class ItensListaActivity extends AppCompatActivity {
@@ -37,26 +37,24 @@ public class ItensListaActivity extends AppCompatActivity {
         final Bundle extras = getIntent().getExtras();
         registro = extras.getInt("registroLista");
 
-        Lista lista = getLista();
-
         btnAddItem = (Button) findViewById(R.id.btn_addItem);
         btnEditarLista = (Button) findViewById(R.id.btn_editarLista);
         txtNomeLista = (TextView) findViewById(R.id.txt_nomeLista);
         txtDataLista = (TextView) findViewById(R.id.txt_dataLista);
         txtNomeMercado = (TextView) findViewById(R.id.txt_nomeMercado);
-        txtNomeLista.setText("Nome: " + lista.getNome());
-        txtDataLista.setText("Data: " + lista.getData());
-        txtNomeMercado.setText("Mercado: " + lista.getNomeMercado());
         rvItensLista = (RecyclerView) findViewById(R.id.rv_itensLista);
         rvItensLista.setLayoutManager(new LinearLayoutManager(this));
 
+        preencherInformacoesLista();
         adapter = new ItemAdapter(getItens());
         rvItensLista.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new ItemAdapter.OnItemClickListener() {
             @Override
             public void onListaClick(View listaView, int position) {
-                
+                Intent intent = new Intent(ItensListaActivity.this, VisualizarItemActivity.class);
+                intent.putExtra("registro", position);
+                startActivityForResult(intent, ItensListaActivity.REQUEST_NOVOITEM);
             }
         });
 
@@ -84,13 +82,21 @@ public class ItensListaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ItensListaActivity.this, EditarListaActivity.class);
+                intent.putExtra("registro", registro);
                 startActivityForResult(intent, ItensListaActivity.REQUEST_EDITLISTA);
             }
         });
 
     }
 
-    private Lista getLista()
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        adapter.setCursor(getItens());
+        preencherInformacoesLista();
+    }
+
+    private void preencherInformacoesLista()
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String []visao = {
@@ -111,7 +117,9 @@ public class ItensListaActivity extends AppCompatActivity {
         lista.setNome(cursor.getString(idxNome));
         lista.setData(cursor.getString(idxData));
         lista.setNomeMercado(cursor.getString(idxMercado));
-        return lista;
+        txtNomeLista.setText("Nome: " + lista.getNome());
+        txtDataLista.setText("Data: " + lista.getData());
+        txtNomeMercado.setText("Mercado: " + lista.getNomeMercado());
     }
 
     private Cursor getItens()

@@ -21,7 +21,8 @@
         <activity android:name=".ItensListaActivity" />
         <activity android:name=".CadastrarItemActivity" />
         <activity android:name=".ComprasActivity" />
-        <activity android:name=".EditarListaActivity"></activity>
+        <activity android:name=".EditarListaActivity" />
+        <activity android:name=".VisualizarItemActivity"></activity>
     </application>
 
 </manifest>
