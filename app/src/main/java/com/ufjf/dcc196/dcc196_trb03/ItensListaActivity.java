@@ -13,12 +13,14 @@ import android.widget.Button;
 public class ItensListaActivity extends AppCompatActivity {
 
     private static final int REQUEST_NOVOITEM = 1;
+    private static final int REQUEST_EDITLISTA = 2;
 
     private Button btnAddItem;
     private RecyclerView rvItensLista;
     private ItemAdapter adapter;
     private ListaDbHelper dbHelper;
     private Integer registro;
+    private Button btnEditarLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class ItensListaActivity extends AppCompatActivity {
         registro = extras.getInt("registroLista");
 
         btnAddItem = (Button) findViewById(R.id.btn_addItem);
+        btnEditarLista = (Button) findViewById(R.id.btn_editarLista);
         rvItensLista = (RecyclerView) findViewById(R.id.rv_itensLista);
         rvItensLista.setLayoutManager(new LinearLayoutManager(this));
 
@@ -64,6 +67,13 @@ public class ItensListaActivity extends AppCompatActivity {
             }
         });
 
+        btnEditarLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ItensListaActivity.this, EditarListaActivity.class);
+                startActivityForResult(intent, ItensListaActivity.REQUEST_EDITLISTA);
+            }
+        });
 
     }
 
