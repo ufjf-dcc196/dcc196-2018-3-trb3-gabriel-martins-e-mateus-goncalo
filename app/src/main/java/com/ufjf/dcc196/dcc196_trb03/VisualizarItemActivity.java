@@ -75,7 +75,6 @@ public class VisualizarItemActivity extends AppCompatActivity {
         item.setNomeItem(cursor.getString(idxNome));
         item.setQuantidadeItem(cursor.getInt(idxQuantidade));
         item.setValor(cursor.getDouble(idxValor)/item.getQuantidadeItem());
-
         txtNomeItem.setText(item.getNomeItem());
         txtQuantidadeItem.setText(String.valueOf(item.getQuantidadeItem()));
         txtValorItem.setText(String.valueOf(item.getValor()));
