@@ -17,6 +17,7 @@ public class CadastrarItemActivity extends AppCompatActivity {
     private EditText etxtQuantidadeItem;
     private EditText etxtValorItem;
     private ListaDbHelper dbHelper;
+    private Integer registro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,9 @@ public class CadastrarItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastrar_item);
 
         dbHelper = new ListaDbHelper(getApplicationContext());
+
+        final Bundle extras = getIntent().getExtras();
+        registro = extras.getInt("registro");
 
         btnConfNovoItem = (Button) findViewById(R.id.btn_ConfNovoItem);
         etxtNomeItem = (EditText) findViewById(R.id.etxt_NomeItem);
@@ -40,11 +44,12 @@ public class CadastrarItemActivity extends AppCompatActivity {
                 item.setQuantidadeItem(Integer.parseInt(etxtQuantidadeItem.getText().toString()));
                 if (etxtValorItem.getText().toString() != "")
                 {
-                    item.setValor(Double.parseDouble(etxtValorItem.getText().toString()));
+                    item.setValor(item.getQuantidadeItem() * Double.parseDouble(etxtValorItem.getText().toString()));
                     valores.put(AppContract.ItemLista.COLUMN_NAME_VALOR, item.getValor());
                 }
                 valores.put(AppContract.ItemLista.COLUMN_NAME_NOME, item.getNomeItem());
                 valores.put(AppContract.ItemLista.COLUMN_NAME_QUANTIDADE, item.getQuantidadeItem());
+                valores.put(AppContract.ItemLista.COLUMN_NAME_LISTA, registro);
                 long id = db.insert(AppContract.ItemLista.TABLE_NAME,null, valores);
                 Log.i("DBINFO", "registro criado com id: "+id);
                 setResult(Activity.RESULT_OK);
