@@ -73,6 +73,8 @@ public class ItensListaActivity extends AppCompatActivity {
         String []visao = {
                 AppContract.ItemLista.COLUMN_NAME_REGISTRO,
                 AppContract.ItemLista.COLUMN_NAME_NOME,
+                AppContract.ItemLista.COLUMN_NAME_QUANTIDADE,
+                AppContract.ItemLista.COLUMN_NAME_VALOR,
         };
         String select = AppContract.ItemLista.COLUMN_NAME_LISTA+" = ?";
         String [] selectArgs = {String.valueOf(registro)};

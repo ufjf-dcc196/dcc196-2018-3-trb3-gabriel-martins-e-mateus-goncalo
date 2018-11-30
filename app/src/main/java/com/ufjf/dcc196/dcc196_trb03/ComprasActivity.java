@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 public class ComprasActivity extends AppCompatActivity {
 
     private RecyclerView rvCompras;
+    private ListaAdapter adapter;
+    private ListaDbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

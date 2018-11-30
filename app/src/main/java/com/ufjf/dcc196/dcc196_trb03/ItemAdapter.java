@@ -44,7 +44,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Context context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View itemView = inflater.inflate(R.layout.listas_layout, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.lista_item, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(itemView);
         return viewHolder;
     }
@@ -53,11 +53,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
         int idxNome = cursor.getColumnIndexOrThrow(AppContract.ItemLista.COLUMN_NAME_NOME);
+        int idxQuantidade = cursor.getColumnIndexOrThrow(AppContract.ItemLista.COLUMN_NAME_QUANTIDADE);
+        int idxValor = cursor.getColumnIndexOrThrow(AppContract.ItemLista.COLUMN_NAME_VALOR);
 
         cursor.moveToPosition(i);
 
         viewHolder.txtItemNome.setText(cursor.getString(idxNome));
-
+        viewHolder.txtQuantidadeItem.setText(String.valueOf(cursor.getInt(idxQuantidade)));
+        viewHolder.txtValor.setText("R$" + String.valueOf(cursor.getFloat(idxValor)));
     }
 
     @Override
@@ -67,10 +70,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         public TextView txtItemNome;
-
+        public TextView txtQuantidadeItem;
+        public TextView txtValor;
         public ViewHolder(final View itemView) {
             super(itemView);
-            txtItemNome = itemView.findViewById(R.id.txtListaNome);
+            txtItemNome = itemView.findViewById(R.id.txtItemNome);
+            txtQuantidadeItem = itemView.findViewById(R.id.txtQuantidade);
+            txtValor = itemView.findViewById(R.id.txtValor);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
