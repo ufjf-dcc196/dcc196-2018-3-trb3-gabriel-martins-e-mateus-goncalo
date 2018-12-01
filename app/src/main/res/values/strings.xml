@@ -6,4 +6,6 @@
     <string name="hint_DataLista">Data da lista</string>
     <string name="hint_NomeMercado">Nome do mercado</string>
     <string name="hint_ValorItem">Opcional (Valor do item)</string>
+    <string name="hint_NomeCompra">Nome da Compra</string>
+    <string name="hint_DataCompra" >Data da Compra</string>
 </resources>
