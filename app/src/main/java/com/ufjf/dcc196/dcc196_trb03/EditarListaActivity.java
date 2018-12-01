@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class EditarListaActivity extends AppCompatActivity {
 
@@ -42,14 +43,20 @@ public class EditarListaActivity extends AppCompatActivity {
         btnConfEditLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContentValues cv = new ContentValues();
-                cv.put(AppContract.Lista.COLUMN_NAME_NOME, etxtNomeListaEd.getText().toString());
-                cv.put(AppContract.Lista.COLUMN_NAME_DATA, etxtDataEd.getText().toString());
-                cv.put(AppContract.Lista.COLUMN_NAME_MERCADO, etxtNomeMercadoEd.getText().toString());
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                db.update(AppContract.Lista.TABLE_NAME, cv, AppContract.Lista.COLUMN_NAME_REGISTRO +"="+registro, null);
-                setResult(Activity.RESULT_OK);
-                finish();
+                if (!etxtNomeListaEd.getText().toString().isEmpty()) {
+                    ContentValues cv = new ContentValues();
+                    cv.put(AppContract.Lista.COLUMN_NAME_NOME, etxtNomeListaEd.getText().toString());
+                    cv.put(AppContract.Lista.COLUMN_NAME_DATA, etxtDataEd.getText().toString());
+                    cv.put(AppContract.Lista.COLUMN_NAME_MERCADO, etxtNomeMercadoEd.getText().toString());
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    db.update(AppContract.Lista.TABLE_NAME, cv, AppContract.Lista.COLUMN_NAME_REGISTRO + "=" + registro, null);
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "É preciso informar pelo menos o nome", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
