@@ -11,9 +11,9 @@ public class Lista {
     private String data;
     private Double valor;
     private String nomeMercado;
-    private ArrayList<ItemDeLista> itens;
+    private ArrayList<Item> itens;
 
-    public Lista(Integer registro, String nome, String data, Double valor, String nomeMercado, ArrayList<ItemDeLista> itens) {
+    public Lista(Integer registro, String nome, String data, Double valor, String nomeMercado, ArrayList<Item> itens) {
         this.registro = registro;
         this.nome = nome;
         this.data = data;
@@ -65,11 +65,11 @@ public class Lista {
         this.nomeMercado = nomeMercado;
     }
 
-    public ArrayList<ItemDeLista> getItens() {
+    public ArrayList<Item> getItens() {
         return itens;
     }
 
-    public void setItens(ArrayList<ItemDeLista> itens) {
+    public void setItens(ArrayList<Item> itens) {
         this.itens = itens;
     }
 }

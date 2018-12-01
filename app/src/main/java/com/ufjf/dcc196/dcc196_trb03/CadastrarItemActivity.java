@@ -39,7 +39,7 @@ public class CadastrarItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!etxtNomeItem.getText().toString().isEmpty()) {
-                    ItemDeLista item = new ItemDeLista();
+                    Item item = new Item();
                     SQLiteDatabase db = dbHelper.getWritableDatabase();
                     ContentValues valores = new ContentValues();
                     item.setNomeItem(etxtNomeItem.getText().toString());

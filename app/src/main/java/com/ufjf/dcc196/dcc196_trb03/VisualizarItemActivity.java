@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class VisualizarItemActivity extends AppCompatActivity {
 
@@ -39,17 +40,22 @@ public class VisualizarItemActivity extends AppCompatActivity {
         btnConfirmarEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContentValues cv = new ContentValues();
-                cv.put(AppContract.ItemLista.COLUMN_NAME_NOME, txtNomeItem.getText().toString());
-                cv.put(AppContract.ItemLista.COLUMN_NAME_QUANTIDADE, txtQuantidadeItem.getText().toString());
-                if (txtValorItem.getText().toString() != "")
-                {
-                    cv.put(AppContract.ItemLista.COLUMN_NAME_VALOR, Integer.parseInt(txtQuantidadeItem.getText().toString()) * Double.parseDouble(txtValorItem.getText().toString()));
+                if (!txtNomeItem.getText().toString().isEmpty()) {
+                    ContentValues cv = new ContentValues();
+                    cv.put(AppContract.ItemLista.COLUMN_NAME_NOME, txtNomeItem.getText().toString());
+                    cv.put(AppContract.ItemLista.COLUMN_NAME_QUANTIDADE, txtQuantidadeItem.getText().toString());
+                    if (txtValorItem.getText().toString() != "") {
+                        cv.put(AppContract.ItemLista.COLUMN_NAME_VALOR, Integer.parseInt(txtQuantidadeItem.getText().toString()) * Double.parseDouble(txtValorItem.getText().toString()));
+                    }
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    db.update(AppContract.ItemLista.TABLE_NAME, cv, AppContract.Lista.COLUMN_NAME_REGISTRO + "=" + registro, null);
+                    setResult(Activity.RESULT_OK);
+                    finish();
                 }
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                db.update(AppContract.ItemLista.TABLE_NAME, cv, AppContract.Lista.COLUMN_NAME_REGISTRO +"="+registro, null);
-                setResult(Activity.RESULT_OK);
-                finish();
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "É preciso informar pelo menos o nome", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -67,7 +73,7 @@ public class VisualizarItemActivity extends AppCompatActivity {
         String [] selectArgs = {String.valueOf(registro)};
         String sort = AppContract.ItemLista.COLUMN_NAME_NOME+ " ASC";
         Cursor cursor = db.query(AppContract.ItemLista.TABLE_NAME, visao,select,selectArgs,null,null, sort);
-        ItemDeLista item = new ItemDeLista();
+        Item item = new Item();
         Integer idxNome = cursor.getColumnIndexOrThrow(AppContract.ItemLista.COLUMN_NAME_NOME);
         Integer idxQuantidade = cursor.getColumnIndexOrThrow(AppContract.ItemLista.COLUMN_NAME_QUANTIDADE);
         Integer idxValor = cursor.getColumnIndexOrThrow(AppContract.ItemLista.COLUMN_NAME_VALOR);

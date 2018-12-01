@@ -1,20 +1,20 @@
 package com.ufjf.dcc196.dcc196_trb03;
 
-public class ItemDeLista {
+public class Item {
 
     private Integer codigoItem;
     private String nomeItem;
     private Integer quantidadeItem;
     private Double valor;
 
-    public ItemDeLista(Integer codigoItem, String nomeItem, Integer quantidadeItem, Double valor) {
+    public Item(Integer codigoItem, String nomeItem, Integer quantidadeItem, Double valor) {
         this.codigoItem = codigoItem;
         this.nomeItem = nomeItem;
         this.quantidadeItem = quantidadeItem;
         this.valor = valor;
     }
 
-    public ItemDeLista() {
+    public Item() {
     }
 
     public Integer getCodigoItem() {

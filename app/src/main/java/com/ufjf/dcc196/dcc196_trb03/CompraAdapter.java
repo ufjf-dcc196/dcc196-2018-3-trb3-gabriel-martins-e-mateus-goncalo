@@ -9,27 +9,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
+public class CompraAdapter extends RecyclerView.Adapter<CompraAdapter.ViewHolder>{
 
     private Cursor cursor;
-    private OnItemClickListener listener;
-    private OnItemLongClickListener longListener;
+    private OnListaClickListener listener;
+    private OnListaLongClickListener longListener;
 
-    public interface OnItemClickListener {
+    public interface OnListaClickListener {
         void onListaClick(View listaView, int position);
     }
-    public interface OnItemLongClickListener {
+    public interface OnListaLongClickListener {
         void onListaLongClick(View listaView, int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnCompraClickListener(OnListaClickListener listener){
         this.listener = listener;
     }
-    public void setOnItemLongClickListener(OnItemLongClickListener listener){
+    public void setOnCompraLongClickListener(OnListaLongClickListener listener){
         this.longListener = listener;
     }
 
-    public ItemAdapter (Cursor c)
+    public CompraAdapter (Cursor c)
     {
         cursor = c;
     }
@@ -44,23 +44,20 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Context context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View itemView = inflater.inflate(R.layout.listaitem_layout, viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(itemView);
+        View compraView = inflater.inflate(R.layout.compras_layout, viewGroup, false);
+        ViewHolder viewHolder = new ViewHolder(compraView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
-        int idxNome = cursor.getColumnIndexOrThrow(AppContract.ItemLista.COLUMN_NAME_NOME);
-        int idxQuantidade = cursor.getColumnIndexOrThrow(AppContract.ItemLista.COLUMN_NAME_QUANTIDADE);
-        int idxValor = cursor.getColumnIndexOrThrow(AppContract.ItemLista.COLUMN_NAME_VALOR);
-
+        int idxNome = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_NOME);
+        int idxData = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_DATA);
+        int idxValor = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_VALOR);
         cursor.moveToPosition(i);
-
-        viewHolder.txtItemNome.setText(cursor.getString(idxNome));
-        viewHolder.txtQuantidadeItem.setText(String.valueOf(cursor.getInt(idxQuantidade)));
-        viewHolder.txtValor.setText("R$" + String.valueOf(cursor.getFloat(idxValor)));
+        viewHolder.txtNomeCompra.setText(cursor.getString(idxNome));
+        viewHolder.txtValorCompra.setText("R$" + String.valueOf(cursor.getDouble(idxValor)));
+        viewHolder.txtDataCompra.setText(cursor.getString(idxData));
     }
 
     @Override
@@ -69,21 +66,22 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        public TextView txtItemNome;
-        public TextView txtQuantidadeItem;
-        public TextView txtValor;
+        public TextView txtNomeCompra;
+        public TextView txtDataCompra;
+        public TextView txtValorCompra;
+
         public ViewHolder(final View itemView) {
             super(itemView);
-            txtItemNome = itemView.findViewById(R.id.txtItemNome);
-            txtQuantidadeItem = itemView.findViewById(R.id.txtQuantidade);
-            txtValor = itemView.findViewById(R.id.txtValor);
+            txtNomeCompra = itemView.findViewById(R.id.txtCompraNome);
+            txtDataCompra = itemView.findViewById(R.id.txtCompraData);
+            txtValorCompra = itemView.findViewById(R.id.txtCompraValor);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(listener!=null){
                         int position = getAdapterPosition();
                         cursor.moveToPosition(position);
-                        Integer idxNum = cursor.getColumnIndexOrThrow(AppContract.ItemLista.COLUMN_NAME_REGISTRO);
+                        Integer idxNum = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_REGISTRO);
                         if(position!=RecyclerView.NO_POSITION){
                             listener.onListaClick(itemView, cursor.getInt(idxNum));
                         }
@@ -96,7 +94,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
                     if(longListener!=null){
                         int position = getAdapterPosition();
                         cursor.moveToPosition(position);
-                        Integer idxNum = cursor.getColumnIndexOrThrow(AppContract.ItemLista.COLUMN_NAME_REGISTRO);
+                        Integer idxNum = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_REGISTRO);
                         if(position!=RecyclerView.NO_POSITION){
                             longListener.onListaLongClick(itemView, cursor.getInt(idxNum));
                             return true;
@@ -129,4 +127,3 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         }
     }
 }
-

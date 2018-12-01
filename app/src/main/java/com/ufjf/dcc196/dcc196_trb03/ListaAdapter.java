@@ -51,13 +51,9 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
         int idxNome = cursor.getColumnIndexOrThrow(AppContract.Lista.COLUMN_NAME_NOME);
-
         cursor.moveToPosition(i);
-
         viewHolder.txtNomeLista.setText(cursor.getString(idxNome));
-
     }
 
     @Override
