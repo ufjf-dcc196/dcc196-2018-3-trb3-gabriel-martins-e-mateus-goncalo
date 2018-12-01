@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class CadastrarListaActivity extends AppCompatActivity {
 
@@ -33,20 +34,26 @@ public class CadastrarListaActivity extends AppCompatActivity {
         btnConfNovaLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Lista lista = new Lista();
-                lista.setNome(etxtNomeLista.getText().toString());
-                lista.setData(etxtDataLista.getText().toString());
-                lista.setNomeMercado(etxtNomeMercado.getText().toString());
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                ContentValues valores = new ContentValues();
-                valores.put(AppContract.Lista.COLUMN_NAME_NOME, lista.getNome());
-                valores.put(AppContract.Lista.COLUMN_NAME_DATA, lista.getData());
-                valores.put(AppContract.Lista.COLUMN_NAME_EHCOMPRA, 0);
-                valores.put(AppContract.Lista.COLUMN_NAME_MERCADO, lista.getNomeMercado());
-                long id = db.insert(AppContract.Lista.TABLE_NAME,null, valores);
-                Log.i("DBINFO", "registro criado com id: "+id);
-                setResult(Activity.RESULT_OK);
-                finish();
+                if (!etxtNomeLista.getText().toString().isEmpty()) {
+                    Lista lista = new Lista();
+                    lista.setNome(etxtNomeLista.getText().toString());
+                    lista.setData(etxtDataLista.getText().toString());
+                    lista.setNomeMercado(etxtNomeMercado.getText().toString());
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    ContentValues valores = new ContentValues();
+                    valores.put(AppContract.Lista.COLUMN_NAME_NOME, lista.getNome());
+                    valores.put(AppContract.Lista.COLUMN_NAME_DATA, lista.getData());
+                    valores.put(AppContract.Lista.COLUMN_NAME_EHCOMPRA, 0);
+                    valores.put(AppContract.Lista.COLUMN_NAME_MERCADO, lista.getNomeMercado());
+                    long id = db.insert(AppContract.Lista.TABLE_NAME, null, valores);
+                    Log.i("DBINFO", "registro criado com id: " + id);
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "É preciso informar pelo menos o nome", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

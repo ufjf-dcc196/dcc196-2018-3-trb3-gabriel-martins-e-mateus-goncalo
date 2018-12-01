@@ -30,6 +30,7 @@ public class CadastrarCompraActivity extends AppCompatActivity {
         btnConfNovaCompra = (Button) findViewById(R.id.btn_ConfNovaCompra);
         etxtNomeCompra = (EditText) findViewById(R.id.etxt_NomeCompra);
         etxtDataCompra = (EditText) findViewById(R.id.etxt_DataCompra);
+        etxtValorCompra = (EditText) findViewById(R.id.etxt_ValorItemCompra);
         etxtNomeMercadoCompra = (EditText) findViewById(R.id.etxt_NomeMercadoCompra);
 
         btnConfNovaCompra.setOnClickListener(new View.OnClickListener() {

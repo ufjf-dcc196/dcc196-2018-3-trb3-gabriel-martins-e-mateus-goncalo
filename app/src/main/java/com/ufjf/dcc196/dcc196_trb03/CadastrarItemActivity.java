@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class CadastrarItemActivity extends AppCompatActivity {
 
@@ -37,23 +38,26 @@ public class CadastrarItemActivity extends AppCompatActivity {
         btnConfNovoItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ItemDeLista item = new ItemDeLista();
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                ContentValues valores = new ContentValues();
-                item.setNomeItem(etxtNomeItem.getText().toString());
-                item.setQuantidadeItem(Integer.parseInt(etxtQuantidadeItem.getText().toString()));
-                if (etxtValorItem.getText().toString() != "")
-                {
-                    item.setValor(item.getQuantidadeItem() * Double.parseDouble(etxtValorItem.getText().toString()));
-                    valores.put(AppContract.ItemLista.COLUMN_NAME_VALOR, item.getValor());
+                if (!etxtNomeItem.getText().toString().isEmpty()) {
+                    ItemDeLista item = new ItemDeLista();
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    ContentValues valores = new ContentValues();
+                    item.setNomeItem(etxtNomeItem.getText().toString());
+                    item.setQuantidadeItem(Integer.parseInt(etxtQuantidadeItem.getText().toString()));
+                    if (etxtValorItem.getText().toString() != "") {
+                        item.setValor(item.getQuantidadeItem() * Double.parseDouble(etxtValorItem.getText().toString()));
+                        valores.put(AppContract.ItemLista.COLUMN_NAME_VALOR, item.getValor());
+                    }
+                    valores.put(AppContract.ItemLista.COLUMN_NAME_NOME, item.getNomeItem());
+                    valores.put(AppContract.ItemLista.COLUMN_NAME_QUANTIDADE, item.getQuantidadeItem());
+                    valores.put(AppContract.ItemLista.COLUMN_NAME_LISTA, registro);
+                    long id = db.insert(AppContract.ItemLista.TABLE_NAME, null, valores);
+                    Log.i("DBINFO", "registro criado com id: " + id);
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                }else {
+                    Toast.makeText(getApplicationContext(), "É preciso informar pelo menos o nome", Toast.LENGTH_LONG).show();
                 }
-                valores.put(AppContract.ItemLista.COLUMN_NAME_NOME, item.getNomeItem());
-                valores.put(AppContract.ItemLista.COLUMN_NAME_QUANTIDADE, item.getQuantidadeItem());
-                valores.put(AppContract.ItemLista.COLUMN_NAME_LISTA, registro);
-                long id = db.insert(AppContract.ItemLista.TABLE_NAME,null, valores);
-                Log.i("DBINFO", "registro criado com id: "+id);
-                setResult(Activity.RESULT_OK);
-                finish();
             }
         });
     }
