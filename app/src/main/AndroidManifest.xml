@@ -25,7 +25,8 @@
         <activity android:name=".VisualizarItemActivity" />
         <activity android:name=".CadastrarCompraActivity" />
         <activity android:name=".ItensCompraActivity" />
-        <activity android:name=".CadastrarItemCompraActivity"></activity>
+        <activity android:name=".CadastrarItemCompraActivity" />
+        <activity android:name=".EditarCompraActivity"></activity>
     </application>
 
 </manifest>

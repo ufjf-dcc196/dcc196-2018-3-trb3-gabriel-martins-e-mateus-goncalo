@@ -10,6 +10,7 @@ import android.widget.Button;
 public class ItensCompraActivity extends AppCompatActivity {
 
     private static final int REQUEST_ITEMCOMPRA = 1;
+    private static final int REQUEST_EDITCOMPRA = 1;
 
     private Button btnEditarCompra;
     private Button btnAddItemCompra;
@@ -27,7 +28,8 @@ public class ItensCompraActivity extends AppCompatActivity {
         btnEditarCompra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(ItensCompraActivity.this, EditarCompraActivity.class);
+                startActivityForResult(intent, ItensCompraActivity.REQUEST_EDITCOMPRA);
             }
         });
 
